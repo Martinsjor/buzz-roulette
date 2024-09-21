@@ -38,7 +38,7 @@ export const Experience = () => {
 
   return (
     <>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <spotLight
         position={[0, 5, 5]} // Positioning the light as if it comes from above the user
         angle={0.3} // Narrow beam for spotlight effect

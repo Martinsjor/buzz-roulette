@@ -10,7 +10,7 @@ type TouchPosition = { x: number; y: number }
 function App() {
   const [touchStart, setTouchStart] = useState<TouchPosition | null>(null)
   const [touchEnd, setTouchEnd] = useState<TouchPosition | null>(null)
-  const [_, setSwipe] = useAtom(swipeAtom)
+  const [swipe, setSwipe] = useAtom(swipeAtom)
 
   const minSwipeDistance = 20
 
@@ -42,6 +42,7 @@ function App() {
 
   return (
     <JotaiProvider>
+      <p>{swipe}</p>
       <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
         <color attach="background" args={['#ececec']} />
         <Suspense>
