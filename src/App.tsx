@@ -43,7 +43,11 @@ function App() {
   return (
     <JotaiProvider>
       <p>{swipe}</p>
-      <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
+      <Canvas
+        shadows
+        camera={{ position: [3, 3, 3], fov: 30 }}
+        style={{ touchAction: 'none' }}
+      >
         <color attach="background" args={['#ececec']} />
         <Suspense>
           <Physics
