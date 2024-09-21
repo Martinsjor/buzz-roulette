@@ -22,7 +22,6 @@ const Ball: FC<Props> = ({ position }) => {
     if (ballRef.current && ballRef.current.translation) {
       // Hent posisjonen til ballen fra RigidBody
       const currentPosition = ballRef.current.translation()
-      console.log(currentPosition) // Dette vil logge posisjonen til ballen
 
       if (!ballIsActive && !impulseIsDone.current) {
         // Påfør en sterk impuls til høyre for å simulere et "hardt kast"

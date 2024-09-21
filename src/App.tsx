@@ -9,43 +9,76 @@ type TouchPosition = { x: number; y: number }
 
 function App() {
   const [touchStart, setTouchStart] = useState<TouchPosition | null>(null)
-  const [touchEnd, setTouchEnd] = useState<TouchPosition | null>(null)
   const [swipe, setSwipe] = useAtom(swipeAtom)
 
-  const minSwipeDistance = 20
+  const maxSwipeDistance = 300 // Maksimal bredde for fylling
+  const [fillWidth, setFillWidth] = useState(0) // Ny tilstand for fyllebredden
 
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     const startX = e.touches[0].clientX
-    const startY = e.touches[0].clientY
-    setTouchStart({ x: startX, y: startY })
+    setTouchStart({ x: startX, y: 0 })
   }
 
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     const endX = e.touches[0].clientX
-    const endY = e.touches[0].clientY
-    setTouchEnd({ x: endX, y: endY })
-  }
-
-  const onTouchEnd = () => {
-    if (touchStart !== null && touchEnd !== null) {
-      const distanceX = touchEnd.x - touchStart.x
-      const distanceY = touchEnd.y - touchStart.y
-
-      if (Math.abs(distanceX) > minSwipeDistance) {
-        setSwipe(distanceX) // Sett faktisk swipe-distanse
-      }
-
-      setTouchStart(null)
-      setTouchEnd(null)
+    if (touchStart) {
+      const distanceX = touchStart.x - endX // Beregn avstanden til venstre
+      setSwipe(distanceX)
+      setFillWidth(Math.max(0, Math.min(maxSwipeDistance, distanceX))) // Oppdater fyllebredden
     }
   }
 
+  const onTouchEnd = () => {
+    setTouchStart(null) // Nullstill touch-start
+    setFillWidth(0) // Tilbakestill fylling til null
+  }
+  console.log(swipe)
   return (
     <JotaiProvider>
-      <p>{swipe}</p>
+      <div
+        style={{
+          position: 'absolute', // Posisjoner absolutt
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          pointerEvents: 'auto', // Sørger for at div tar imot berøringer
+          backgroundColor: 'transparent', // Transparent bakgrunn
+          zIndex: 10, // Sørger for at den ligger over alt annet
+          touchAction: 'none',
+        }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      />
+      {/* Fyllingsanimasjon */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '300px', // Total bredde for fyllingen
+          height: '30px',
+          borderRadius: '15px',
+          backgroundColor: 'lightgrey',
+          overflow: 'hidden',
+          zIndex: 9,
+        }}
+      >
+        <div
+          style={{
+            width: `${fillWidth}px`, // Fyll bredden basert på swipe
+            height: '100%',
+            borderRadius: '15px',
+            backgroundColor: 'blue',
+            transition: 'none', // Ingen overgang for å oppdatere i sanntid
+          }}
+        />
+      </div>
       <Canvas
         shadows
-        camera={{ position: [3, 3, 3], fov: 30 }}
+        camera={{ position: [3, 3, 3], fov: 40 }}
         style={{ touchAction: 'none' }}
       >
         <color attach="background" args={['#ececec']} />
