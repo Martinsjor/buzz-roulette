@@ -13,6 +13,7 @@ function App() {
 
   const maxSwipeDistance = 300 // Maksimal bredde for fylling
   const [fillWidth, setFillWidth] = useState(0) // Ny tilstand for fyllebredden
+  const [endX, setEndX] = useState<number | null>(null) // Lagre endeposisjonen
 
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     const startX = e.touches[0].clientX
@@ -20,19 +21,24 @@ function App() {
   }
 
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const endX = e.touches[0].clientX
+    const currentX = e.touches[0].clientX
     if (touchStart) {
-      const distanceX = touchStart.x - endX // Beregn avstanden til venstre
-      setSwipe(distanceX)
+      const distanceX = touchStart.x - currentX // Beregn avstanden til venstre
       setFillWidth(Math.max(0, Math.min(maxSwipeDistance, distanceX))) // Oppdater fyllebredden
+      setEndX(currentX) // Oppdater endeposisjonen
     }
   }
 
   const onTouchEnd = () => {
+    if (touchStart && endX !== null) {
+      const distanceX = touchStart.x - endX // Beregn den totale swipe avstanden
+      setSwipe(distanceX) // Oppdater swipe-staten med avstanden
+    }
     setTouchStart(null) // Nullstill touch-start
     setFillWidth(0) // Tilbakestill fylling til null
+    setEndX(null) // Nullstill endeposisjonen
   }
-  console.log(swipe)
+
   return (
     <JotaiProvider>
       <div

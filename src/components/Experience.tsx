@@ -49,9 +49,9 @@ export const Experience = () => {
       />
       <ambientLight intensity={1} />
       <Roulette />
-      {/* <Ball position={[-1.195, 0.04, 0]} /> */}
+      <Ball position={[-1.195, 0.04, 0]} />
       {/* <Ball position={[-1.185, 0.043, 0]} /> */}
-      <Ball position={[-1, 0, 0]} />
+      {/* <Ball position={[-1, 0, 0]} /> */}
     </>
   )
 }
