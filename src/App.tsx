@@ -84,7 +84,7 @@ function App() {
       </div>
       <Canvas
         shadows
-        camera={{ position: [3, 3, 3], fov: 40 }}
+        camera={{ position: [3, 3, 3], fov: 50 }}
         style={{ touchAction: 'none' }}
       >
         <color attach="background" args={['#ececec']} />
