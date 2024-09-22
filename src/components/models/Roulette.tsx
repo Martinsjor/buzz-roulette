@@ -9,30 +9,6 @@ useGLTF.preload('/roulette.glb')
 const Roulette = (props: any) => {
   const { nodes, materials } = useGLTF('/roulette.glb')
   const rouletteRef = useRef<any>()
-  const [isSpinning, setIsSpinning] = useState(false)
-  const [spinSpeed, setSpinSpeed] = useState(0)
-
-  // Function to start the spin
-  const startSpin = () => {
-    if (!isSpinning) {
-      setIsSpinning(true)
-      //   setSpinSpeed(Math.random() * 0.1 + 0.05) // Random spin speed between 0.05 and 0.15
-    }
-  }
-
-  // Handle the spinning animation
-  useFrame(() => {
-    if (isSpinning && rouletteRef.current) {
-      rouletteRef.current.rotation.y += spinSpeed // Rotate around the Y-axis
-
-      // Gradually slow down the spin
-      if (spinSpeed > 0.001) {
-        setSpinSpeed((prev) => prev * 0.98) // Slow down the speed
-      } else {
-        setIsSpinning(false) // Stop spinning when the speed is low
-      }
-    }
-  })
 
   const metalMaterial = new THREE.MeshStandardMaterial({
     color: 'white',
@@ -51,7 +27,7 @@ const Roulette = (props: any) => {
       friction={1}
       restitution={0.2}
     >
-      <group {...props} dispose={null} ref={rouletteRef} onClick={startSpin}>
+      <group {...props} dispose={null} ref={rouletteRef}>
         <mesh
           castShadow
           receiveShadow

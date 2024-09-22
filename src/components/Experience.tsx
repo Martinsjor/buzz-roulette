@@ -13,6 +13,8 @@ import Roulette from './models/Roulette'
 import { AmbientLight, SpotLight } from 'three'
 import { RigidBody } from '@react-three/rapier'
 import Ball from './models/Ball'
+import RouletteTwo from './models/RouletteTwo'
+import RouletteThree from './models/RouletteThree'
 
 export const Experience = () => {
   // const [players, setPlayers] = useState<any>([])
@@ -48,8 +50,13 @@ export const Experience = () => {
         castShadow // To enable shadow casting
       />
       <ambientLight intensity={1} />
-      <Roulette />
-      <Ball position={[-1.195, 0.04, 0]} />
+      {/* <Roulette /> */}
+      {/* <RouletteTwo /> */}
+      <RouletteThree />
+      {/* <Ball position={[-1.195, 0.04, 0]} /> */}
+
+      {/* for roulette3 */}
+      <Ball position={[-1.225, 0.09, 0]} />
       {/* <Ball position={[-1.185, 0.043, 0]} /> */}
       {/* <Ball position={[-1, 0, 0]} /> */}
     </>

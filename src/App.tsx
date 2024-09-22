@@ -57,7 +57,7 @@ function App() {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       />
-      {/* Fyllingsanimasjon */}
+
       <div
         style={{
           position: 'absolute',
