@@ -26,7 +26,7 @@ const RouletteThree = () => {
           castShadow
           receiveShadow
           geometry={nodes.outer_circle.geometry}
-          material={metalMaterial}
+          material={materials['Material.001']}
           rotation={[0, 0, Math.PI]}
           scale={13.458}
         />
